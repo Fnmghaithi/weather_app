@@ -13,15 +13,7 @@ class WeatherService {
 
     Map<String, dynamic> data = jsonDecode(response.body);
 
-    var jsonData = data['forecast']['forecastday'][0];
-
-    WeatherModel weather = WeatherModel(
-      date: data['location']['localtime'],
-      temp: jsonData['day']['avgtemp_c'],
-      maxTemp: jsonData['day']['maxtemp_c'],
-      minTemp: jsonData['day']['mintemp_c'],
-      weatherStateName: jsonData['day']['condition']['text'],
-    );
+    WeatherModel weather = WeatherModel.fromJson(data);
 
     return weather;
   }
