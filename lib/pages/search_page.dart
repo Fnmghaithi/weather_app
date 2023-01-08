@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/services/weather_service.dart';
 
 class SearchPage extends StatelessWidget {
   String? cityName;
+  VoidCallback? updateUI;
+
+  SearchPage({required this.updateUI});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +28,15 @@ class SearchPage extends StatelessWidget {
               suffixIcon: Icon(Icons.search),
               label: Text('Search'),
             ),
-            onSubmitted: (value) {
+            onSubmitted: (value) async {
               cityName = value;
               WeatherService service = WeatherService();
-              service.getWeather(cityName: cityName!);
+              WeatherModel weather =
+                  await service.getWeather(cityName: cityName!);
+
+              weatherData = weather;
+              updateUI!();
+              Navigator.pop(context);
             },
           ),
         ),
@@ -35,3 +44,5 @@ class SearchPage extends StatelessWidget {
     );
   }
 }
+
+WeatherModel? weatherData;
