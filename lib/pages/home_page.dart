@@ -12,12 +12,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void updateUI() {
-    setState(() {});
-  }
+  WeatherModel? weatherData;
+  String? cityName;
 
   @override
   Widget build(BuildContext context) {
+    weatherData = Provider.of<WeatherProvider>(context).weatherData;
+    cityName = Provider.of<WeatherProvider>(context).cityName;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Weather App'),
@@ -27,9 +28,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SearchPage(
-                    updateUI: updateUI,
-                  ),
+                  builder: (context) => SearchPage(),
                 ),
               );
             },
@@ -37,7 +36,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Provider.of<WeatherProvider>(context).weatherData == null
+      body: weatherData == null
           ? Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -64,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   const Spacer(flex: 3),
                   Text(
-                    'Cairo',
+                    cityName!,
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -82,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Image.asset('assets/images/clear.png'),
                       Text(
-                        '30',
+                        weatherData!.temp.toInt().toString(),
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -90,15 +89,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Column(
                         children: [
-                          Text('maxTemp : 30'),
-                          Text('maxTemp : 30'),
+                          Text('maxTemp : ${weatherData!.maxTemp.toInt()}'),
+                          Text('maxTemp : ${weatherData!.minTemp.toInt()}'),
                         ],
                       ),
                     ],
                   ),
                   const Spacer(),
                   Text(
-                    'Clear',
+                    weatherData?.weatherStateName ?? '',
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,

@@ -6,9 +6,6 @@ import 'package:weather_app/services/weather_service.dart';
 
 class SearchPage extends StatelessWidget {
   String? cityName;
-  VoidCallback? updateUI;
-
-  SearchPage({required this.updateUI});
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +35,8 @@ class SearchPage extends StatelessWidget {
 
               Provider.of<WeatherProvider>(context, listen: false).weatherData =
                   weather;
+              Provider.of<WeatherProvider>(context, listen: false).cityName =
+                  cityName;
 
               Navigator.pop(context);
             },
