@@ -24,4 +24,14 @@ class WeatherModel {
       weatherStateName: jsonData['condition']['text'],
     );
   }
+
+  String getImage() {
+    if (weatherStateName == 'Sunny' || weatherStateName == 'Clear') {
+      return 'assets/images/clear.png';
+    } else if (weatherStateName == 'Patchy rain possible') {
+      return 'assets/images/rainy.png';
+    } else {
+      return 'assets/images/clear.png';
+    }
+  }
 }

@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Image.asset('assets/images/clear.png'),
+                      Image.asset(weatherData!.getImage()),
                       Text(
                         weatherData!.temp.toInt().toString(),
                         style: TextStyle(
