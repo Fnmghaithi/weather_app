@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/models/weather_model.dart';
+import 'package:weather_app/providers/weather_provider.dart';
 import 'package:weather_app/services/weather_service.dart';
 
 class SearchPage extends StatelessWidget {
@@ -34,8 +36,9 @@ class SearchPage extends StatelessWidget {
               WeatherModel weather =
                   await service.getWeather(cityName: cityName!);
 
-              weatherData = weather;
-              updateUI!();
+              Provider.of<WeatherProvider>(context, listen: false).weatherData =
+                  weather;
+
               Navigator.pop(context);
             },
           ),
@@ -44,5 +47,3 @@ class SearchPage extends StatelessWidget {
     );
   }
 }
-
-WeatherModel? weatherData;
