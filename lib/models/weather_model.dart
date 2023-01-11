@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WeatherModel {
-  final String date;
+  final DateTime date;
   final double temp;
   final double maxTemp;
   final double minTemp;
@@ -19,7 +19,9 @@ class WeatherModel {
     var jsonData = data['forecast']['forecastday'][0]['day'];
 
     return WeatherModel(
-      date: data['location']['localtime'],
+      // date: data['location']['localtime'],
+
+      date: DateTime.parse(DateTime.now().toString()),
       temp: jsonData['avgtemp_c'],
       maxTemp: jsonData['maxtemp_c'],
       minTemp: jsonData['mintemp_c'],
