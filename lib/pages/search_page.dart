@@ -28,7 +28,7 @@ class SearchPage extends StatelessWidget {
                 child: const Icon(Icons.search),
                 onTap: () async {
                   WeatherService service = WeatherService();
-                  WeatherModel weather =
+                  WeatherModel? weather =
                       await service.getWeather(cityName: cityName!);
 
                   Provider.of<WeatherProvider>(context, listen: false)
@@ -47,7 +47,7 @@ class SearchPage extends StatelessWidget {
             onSubmitted: (value) async {
               cityName = value;
               WeatherService service = WeatherService();
-              WeatherModel weather =
+              WeatherModel? weather =
                   await service.getWeather(cityName: cityName!);
 
               Provider.of<WeatherProvider>(context, listen: false).weatherData =
