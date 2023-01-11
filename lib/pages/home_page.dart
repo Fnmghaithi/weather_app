@@ -57,7 +57,17 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           : Container(
-              color: Colors.orange,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    weatherData!.getThemeColor(),
+                    weatherData!.getThemeColor()[200]!,
+                    weatherData!.getThemeColor()[100]!,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

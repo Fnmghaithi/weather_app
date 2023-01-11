@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class WeatherModel {
   final String date;
   final double temp;
@@ -32,6 +34,16 @@ class WeatherModel {
       return 'assets/images/rainy.png';
     } else {
       return 'assets/images/clear.png';
+    }
+  }
+
+  MaterialColor getThemeColor() {
+    if (weatherStateName == 'Sunny' || weatherStateName == 'Clear') {
+      return Colors.yellow;
+    } else if (weatherStateName == 'Patchy rain possible') {
+      return Colors.lightBlue;
+    } else {
+      return Colors.blue;
     }
   }
 }
