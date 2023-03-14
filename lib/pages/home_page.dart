@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:weather_app/cubits/weather_cubit/weather_cubit.dart';
 import 'package:weather_app/cubits/weather_cubit/weather_state.dart';
 import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/pages/search_page.dart';
-import 'package:weather_app/providers/weather_provider.dart';
 
 class HomePage extends StatelessWidget {
   WeatherModel? weatherData;
@@ -37,6 +35,8 @@ class HomePage extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (state is WeatherSuccess) {
+            weatherData = BlocProvider.of<WeatherCubit>(context).weatherModel;
+            cityName = BlocProvider.of<WeatherCubit>(context).cityName!;
             return SuccessBody(weatherData: weatherData, cityName: cityName);
           } else if (state is WeatherFailure) {
             return const Center(
