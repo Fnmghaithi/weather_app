@@ -37,91 +37,13 @@ class HomePage extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (state is WeatherSuccess) {
-            return Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    weatherData!.getThemeColor(),
-                    weatherData!.getThemeColor()[200]!,
-                    weatherData!.getThemeColor()[100]!,
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Spacer(flex: 3),
-                  Text(
-                    cityName!,
-                    style: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    'updated at: ${weatherData!.date.hour}:${weatherData!.date.minute}',
-                    style: const TextStyle(
-                      fontSize: 22,
-                    ),
-                  ),
-                  const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset(weatherData!.getImage()),
-                      Text(
-                        weatherData!.temp.toInt().toString(),
-                        style: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          Text('maxTemp : ${weatherData!.maxTemp.toInt()}'),
-                          Text('maxTemp : ${weatherData!.minTemp.toInt()}'),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Text(
-                    weatherData?.weatherStateName ?? '',
-                    style: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Spacer(flex: 5),
-                ],
-              ),
-            );
+            return SuccessBody(weatherData: weatherData, cityName: cityName);
           } else if (state is WeatherFailure) {
             return const Center(
               child: Text('Something went wrong please try again'),
             );
           } else {
-            return Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text(
-                    'there is no weather 😔 start',
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
-                  ),
-                  Text(
-                    'searching now 🔍',
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
-                  )
-                ],
-              ),
-            );
+            return const DefaultBody();
           }
         },
       ),
@@ -206,6 +128,111 @@ class HomePage extends StatelessWidget {
       //       ],
       //     ),
       //   ),
+    );
+  }
+}
+
+class DefaultBody extends StatelessWidget {
+  const DefaultBody({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Text(
+            'there is no weather 😔 start',
+            style: TextStyle(
+              fontSize: 30,
+            ),
+          ),
+          Text(
+            'searching now 🔍',
+            style: TextStyle(
+              fontSize: 30,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class SuccessBody extends StatelessWidget {
+  const SuccessBody({
+    Key? key,
+    required this.weatherData,
+    required this.cityName,
+  }) : super(key: key);
+
+  final WeatherModel? weatherData;
+  final String? cityName;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            weatherData!.getThemeColor(),
+            weatherData!.getThemeColor()[200]!,
+            weatherData!.getThemeColor()[100]!,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Spacer(flex: 3),
+          Text(
+            cityName!,
+            style: const TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            'updated at: ${weatherData!.date.hour}:${weatherData!.date.minute}',
+            style: const TextStyle(
+              fontSize: 22,
+            ),
+          ),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.asset(weatherData!.getImage()),
+              Text(
+                weatherData!.temp.toInt().toString(),
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Column(
+                children: [
+                  Text('maxTemp : ${weatherData!.maxTemp.toInt()}'),
+                  Text('maxTemp : ${weatherData!.minTemp.toInt()}'),
+                ],
+              ),
+            ],
+          ),
+          const Spacer(),
+          Text(
+            weatherData?.weatherStateName ?? '',
+            style: const TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const Spacer(flex: 5),
+        ],
+      ),
     );
   }
 }
